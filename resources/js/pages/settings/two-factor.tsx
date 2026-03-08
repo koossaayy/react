@@ -11,131 +11,77 @@ import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { disable, enable, show } from '@/routes/two-factor';
 import type { BreadcrumbItem } from '@/types';
-
 type Props = {
-    requiresConfirmation?: boolean;
-    twoFactorEnabled?: boolean;
+  requiresConfirmation?: boolean;
+  twoFactorEnabled?: boolean;
 };
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Two-factor authentication',
-        href: show(),
-    },
-];
-
+const breadcrumbs: BreadcrumbItem[] = [{
+  title: 'Two-factor authentication',
+  href: show()
+}];
 export default function TwoFactor({
-    requiresConfirmation = false,
-    twoFactorEnabled = false,
+  requiresConfirmation = false,
+  twoFactorEnabled = false
 }: Props) {
-    const {
-        qrCodeSvg,
-        hasSetupData,
-        manualSetupKey,
-        clearSetupData,
-        fetchSetupData,
-        recoveryCodesList,
-        fetchRecoveryCodes,
-        errors,
-    } = useTwoFactorAuth();
-    const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
+  const {
+    qrCodeSvg,
+    hasSetupData,
+    manualSetupKey,
+    clearSetupData,
+    fetchSetupData,
+    recoveryCodesList,
+    fetchRecoveryCodes,
+    errors
+  } = useTwoFactorAuth();
+  const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
+  return <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title={t('Two-factor authentication')} />
 
-    return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Two-factor authentication" />
-
-            <h1 className="sr-only">Two-factor authentication settings</h1>
+            <h1 className="sr-only">{t('Two-factor authentication settings')}</h1>
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <Heading
-                        variant="small"
-                        title="Two-factor authentication"
-                        description="Manage your two-factor authentication settings"
-                    />
-                    {twoFactorEnabled ? (
-                        <div className="flex flex-col items-start justify-start space-y-4">
-                            <Badge variant="default">Enabled</Badge>
+                    <Heading variant="small" title={t('Two-factor authentication')} description="Manage your two-factor authentication settings" />
+                    {twoFactorEnabled ? <div className="flex flex-col items-start justify-start space-y-4">
+                            <Badge variant="default">{t('Enabled')}</Badge>
                             <p className="text-muted-foreground">
-                                With two-factor authentication enabled, you will
-                                be prompted for a secure, random pin during
-                                login, which you can retrieve from the
-                                TOTP-supported application on your phone.
+                                {t('With two-factor authentication enabled, you will\n                                be prompted for a secure, random pin during\n                                login, which you can retrieve from the\n                                TOTP-supported application on your phone.')}
                             </p>
 
-                            <TwoFactorRecoveryCodes
-                                recoveryCodesList={recoveryCodesList}
-                                fetchRecoveryCodes={fetchRecoveryCodes}
-                                errors={errors}
-                            />
+                            <TwoFactorRecoveryCodes recoveryCodesList={recoveryCodesList} fetchRecoveryCodes={fetchRecoveryCodes} errors={errors} />
 
                             <div className="relative inline">
                                 <Form {...disable.form()}>
-                                    {({ processing }) => (
-                                        <Button
-                                            variant="destructive"
-                                            type="submit"
-                                            disabled={processing}
-                                        >
-                                            <ShieldBan /> Disable 2FA
-                                        </Button>
-                                    )}
+                                    {({
+                processing
+              }) => <Button variant="destructive" type="submit" disabled={processing}>
+                                            <ShieldBan /> {t('Disable 2FA')}
+                                        </Button>}
                                 </Form>
                             </div>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col items-start justify-start space-y-4">
-                            <Badge variant="destructive">Disabled</Badge>
+                        </div> : <div className="flex flex-col items-start justify-start space-y-4">
+                            <Badge variant="destructive">{t('Disabled')}</Badge>
                             <p className="text-muted-foreground">
-                                When you enable two-factor authentication, you
-                                will be prompted for a secure pin during login.
-                                This pin can be retrieved from a TOTP-supported
-                                application on your phone.
+                                {t('When you enable two-factor authentication, you\n                                will be prompted for a secure pin during login.\n                                This pin can be retrieved from a TOTP-supported\n                                application on your phone.')}
                             </p>
 
                             <div>
-                                {hasSetupData ? (
-                                    <Button
-                                        onClick={() => setShowSetupModal(true)}
-                                    >
+                                {hasSetupData ? <Button onClick={() => setShowSetupModal(true)}>
                                         <ShieldCheck />
-                                        Continue setup
-                                    </Button>
-                                ) : (
-                                    <Form
-                                        {...enable.form()}
-                                        onSuccess={() =>
-                                            setShowSetupModal(true)
-                                        }
-                                    >
-                                        {({ processing }) => (
-                                            <Button
-                                                type="submit"
-                                                disabled={processing}
-                                            >
+                                        {t('Continue setup')}
+                                    </Button> : <Form {...enable.form()} onSuccess={() => setShowSetupModal(true)}>
+                                        {({
+                processing
+              }) => <Button type="submit" disabled={processing}>
                                                 <ShieldCheck />
-                                                Enable 2FA
-                                            </Button>
-                                        )}
-                                    </Form>
-                                )}
+                                                {t('Enable 2FA')}
+                                            </Button>}
+                                    </Form>}
                             </div>
-                        </div>
-                    )}
+                        </div>}
 
-                    <TwoFactorSetupModal
-                        isOpen={showSetupModal}
-                        onClose={() => setShowSetupModal(false)}
-                        requiresConfirmation={requiresConfirmation}
-                        twoFactorEnabled={twoFactorEnabled}
-                        qrCodeSvg={qrCodeSvg}
-                        manualSetupKey={manualSetupKey}
-                        clearSetupData={clearSetupData}
-                        fetchSetupData={fetchSetupData}
-                        errors={errors}
-                    />
+                    <TwoFactorSetupModal isOpen={showSetupModal} onClose={() => setShowSetupModal(false)} requiresConfirmation={requiresConfirmation} twoFactorEnabled={twoFactorEnabled} qrCodeSvg={qrCodeSvg} manualSetupKey={manualSetupKey} clearSetupData={clearSetupData} fetchSetupData={fetchSetupData} errors={errors} />
                 </div>
             </SettingsLayout>
-        </AppLayout>
-    );
+        </AppLayout>;
 }

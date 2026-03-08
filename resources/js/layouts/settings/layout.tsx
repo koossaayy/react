@@ -10,69 +10,48 @@ import { edit } from '@/routes/profile';
 import { show } from '@/routes/two-factor';
 import { edit as editPassword } from '@/routes/user-password';
 import type { NavItem } from '@/types';
+const sidebarNavItems: NavItem[] = [{
+  title: t('Profile'),
+  href: edit(),
+  icon: null
+}, {
+  title: t('Password'),
+  href: editPassword(),
+  icon: null
+}, {
+  title: t('Two-factor auth'),
+  href: show(),
+  icon: null
+}, {
+  title: t('Appearance'),
+  href: editAppearance(),
+  icon: null
+}];
+export default function SettingsLayout({
+  children
+}: PropsWithChildren) {
+  const {
+    isCurrentOrParentUrl
+  } = useCurrentUrl();
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: edit(),
-        icon: null,
-    },
-    {
-        title: 'Password',
-        href: editPassword(),
-        icon: null,
-    },
-    {
-        title: 'Two-factor auth',
-        href: show(),
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: editAppearance(),
-        icon: null,
-    },
-];
-
-export default function SettingsLayout({ children }: PropsWithChildren) {
-    const { isCurrentOrParentUrl } = useCurrentUrl();
-
-    // When server-side rendering, we only render the layout on the client...
-    if (typeof window === 'undefined') {
-        return null;
-    }
-
-    return (
-        <div className="px-4 py-6">
-            <Heading
-                title="Settings"
-                description="Manage your profile and account settings"
-            />
+  // When server-side rendering, we only render the layout on the client...
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  return <div className="px-4 py-6">
+            <Heading title={t('Settings')} description="Manage your profile and account settings" />
 
             <div className="flex flex-col lg:flex-row lg:space-x-12">
                 <aside className="w-full max-w-xl lg:w-48">
-                    <nav
-                        className="flex flex-col space-y-1 space-x-0"
-                        aria-label="Settings"
-                    >
-                        {sidebarNavItems.map((item, index) => (
-                            <Button
-                                key={`${toUrl(item.href)}-${index}`}
-                                size="sm"
-                                variant="ghost"
-                                asChild
-                                className={cn('w-full justify-start', {
-                                    'bg-muted': isCurrentOrParentUrl(item.href),
-                                })}
-                            >
+                    <nav className="flex flex-col space-y-1 space-x-0" aria-label={t('Settings')}>
+                        {sidebarNavItems.map((item, index) => <Button key={`${toUrl(item.href)}-${index}`} size="sm" variant="ghost" asChild className={cn('w-full justify-start', {
+            'bg-muted': isCurrentOrParentUrl(item.href)
+          })}>
                                 <Link href={item.href}>
-                                    {item.icon && (
-                                        <item.icon className="h-4 w-4" />
-                                    )}
+                                    {item.icon && <item.icon className="h-4 w-4" />}
                                     {item.title}
                                 </Link>
-                            </Button>
-                        ))}
+                            </Button>)}
                     </nav>
                 </aside>
 
@@ -84,6 +63,5 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                     </section>
                 </div>
             </div>
-        </div>
-    );
+        </div>;
 }
