@@ -4,47 +4,33 @@ import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Items',
-        href: '/items',
-        icon: Package,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
-
+import { useTranslation } from 'react-i18next';
+const mainNavItems: NavItem[] = [{
+  title: t('Dashboard'),
+  href: dashboard(),
+  icon: LayoutGrid
+}, {
+  title: t('Items'),
+  href: '/items',
+  icon: Package
+}];
+const footerNavItems: NavItem[] = [{
+  title: t('Repository'),
+  href: 'https://github.com/laravel/react-starter-kit',
+  icon: FolderGit2
+}, {
+  title: t('Documentation'),
+  href: 'https://laravel.com/docs/starter-kits#react',
+  icon: BookOpen
+}];
 export function AppSidebar() {
-    return (
-        <Sidebar collapsible="icon" variant="inset">
+  const {
+    t
+  } = useTranslation();
+  return <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -65,6 +51,5 @@ export function AppSidebar() {
                 <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
-        </Sidebar>
-    );
+        </Sidebar>;
 }

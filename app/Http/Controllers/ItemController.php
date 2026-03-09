@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateItemRequest;
 use App\Models\Item;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
-
 class ItemController extends Controller
 {
     /**
@@ -15,11 +14,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Inertia::render('items/index', [
-            'items' => Item::latest()->get(),
-        ]);
+        return Inertia::render('items/index', ['items' => Item::latest()->get()]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -27,17 +23,14 @@ class ItemController extends Controller
     {
         return Inertia::render('items/create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreItemRequest $request): RedirectResponse
     {
         Item::create($request->validated());
-
-        return redirect()->route('items.index')->with('success', 'Item created successfully.');
+        return redirect()->route('items.index')->with('success', __('Item created successfully.'));
     }
-
     /**
      * Display the specified resource.
      */
@@ -45,34 +38,27 @@ class ItemController extends Controller
     {
         // Not used in this simple CRUD
     }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Item $item)
     {
-        return Inertia::render('items/edit', [
-            'item' => $item,
-        ]);
+        return Inertia::render('items/edit', ['item' => $item]);
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateItemRequest $request, Item $item): RedirectResponse
     {
         $item->update($request->validated());
-
-        return redirect()->route('items.index')->with('success', 'Item updated successfully.');
+        return redirect()->route('items.index')->with('success', __('Item updated successfully.'));
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Item $item): RedirectResponse
     {
         $item->delete();
-
-        return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
+        return redirect()->route('items.index')->with('success', __('Item deleted successfully.'));
     }
 }
