@@ -4,6 +4,7 @@ import type { BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from 'react-i18next';
 
 interface Item {
     id: number;
@@ -12,8 +13,10 @@ interface Item {
 }
 
 export default function Edit({ item }: { item: Item }) {
+    const { t } = useTranslation();
+
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Items', href: '/items' },
+        { title: t('Items'), href: '/items' },
         { title: `Edit ${item.name}`, href: `/items/${item.id}/edit` },
     ];
 
@@ -33,16 +36,16 @@ export default function Edit({ item }: { item: Item }) {
 
             <div className="flex flex-1 flex-col gap-4 p-4">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-semibold tracking-tight">Edit Item</h2>
+                    <h2 className="text-2xl font-semibold tracking-tight">{t('Edit Item')}</h2>
                     <Button variant="outline" asChild>
-                        <Link href="/items">Back to Items</Link>
+                        <Link href="/items">{t('Back to Items')}</Link>
                     </Button>
                 </div>
 
                 <div className="max-w-xl rounded-xl border bg-card p-6 shadow-sm">
                     <form onSubmit={submit} className="space-y-6">
                         <div className="space-y-2">
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="name">{t('Name')}</Label>
                             <Input
                                 id="name"
                                 value={data.name}
@@ -54,7 +57,7 @@ export default function Edit({ item }: { item: Item }) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="description">Description</Label>
+                            <Label htmlFor="description">{t('Description')}</Label>
                             <Input
                                 id="description"
                                 value={data.description}
@@ -65,7 +68,7 @@ export default function Edit({ item }: { item: Item }) {
 
                         <div className="flex justify-end pt-4">
                             <Button type="submit" disabled={processing}>
-                                Update Item
+                                {t('Update Item')}
                             </Button>
                         </div>
                     </form>
