@@ -35,7 +35,7 @@ class ItemController extends Controller
     {
         Item::create($request->validated());
 
-        return redirect()->route('items.index')->with('success', 'Item created successfully.');
+        return redirect()->route('items.index')->with('success', __('Item created successfully.'));
     }
 
     /**
@@ -63,7 +63,7 @@ class ItemController extends Controller
     {
         $item->update($request->validated());
 
-        return redirect()->route('items.index')->with('success', 'Item updated successfully.');
+        return redirect()->route('items.index')->with('success', __('Item updated successfully.'));
     }
 
     /**
@@ -73,6 +73,6 @@ class ItemController extends Controller
     {
         $item->delete();
 
-        return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
+        return redirect()->route('items.index')->with('success', __('Item deleted successfully.'));
     }
 }
