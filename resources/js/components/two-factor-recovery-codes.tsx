@@ -57,11 +57,11 @@ export default function TwoFactorRecoveryCodes({
             <CardHeader>
                 <CardTitle className="flex gap-3">
                     <LockKeyhole className="size-4" aria-hidden="true" />
-                    2FA recovery codes
+                    {t('2FA recovery codes')}
                 </CardTitle>
                 <CardDescription>
-                    Recovery codes let you regain access if you lose your 2FA
-                    device. Store them in a secure password manager.
+                    {t('Recovery codes let you regain access if you lose your 2FA
+                    device. Store them in a secure password manager.')}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -92,7 +92,7 @@ export default function TwoFactorRecoveryCodes({
                                     disabled={processing}
                                     aria-describedby="regenerate-warning"
                                 >
-                                    <RefreshCw /> Regenerate codes
+                                    <RefreshCw /> {t('Regenerate codes')}
                                 </Button>
                             )}
                         </Form>
@@ -149,7 +149,7 @@ export default function TwoFactorRecoveryCodes({
                                         access your account and will be removed
                                         after use. If you need more, click{' '}
                                         <span className="font-bold">
-                                            Regenerate codes
+                                            {t('Regenerate codes')}
                                         </span>{' '}
                                         above.
                                     </p>

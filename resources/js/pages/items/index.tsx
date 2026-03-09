@@ -23,7 +23,7 @@ import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Items',
+        title: t('Items'),
         href: '/items',
     },
 ];
@@ -47,13 +47,13 @@ export default function Index({ items, flash }: { items: Item[]; flash?: { succe
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Items" />
+            <Head title={t('Items')} />
             
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-semibold tracking-tight">Items</h2>
+                    <h2 className="text-2xl font-semibold tracking-tight">{t('Items')}</h2>
                     <Button asChild>
-                        <Link href="/items/create">Create Item</Link>
+                        <Link href="/items/create">{t('Create Item')}</Link>
                     </Button>
                 </div>
 
@@ -67,17 +67,17 @@ export default function Index({ items, flash }: { items: Item[]; flash?: { succe
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="w-[80px]">ID</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Description</TableHead>
-                                <TableHead className="w-[200px] text-right">Actions</TableHead>
+                                <TableHead className="w-[80px]">{t('ID')}</TableHead>
+                                <TableHead>{t('Name')}</TableHead>
+                                <TableHead>{t('Description')}</TableHead>
+                                <TableHead className="w-[200px] text-right">{t('Actions')}</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {items.length === 0 ? (
                                 <TableRow>
                                     <TableCell colSpan={4} className="h-24 text-center">
-                                        No items found.
+                                        {t('No items found.')}
                                     </TableCell>
                                 </TableRow>
                             ) : (
@@ -89,17 +89,17 @@ export default function Index({ items, flash }: { items: Item[]; flash?: { succe
                                         <TableCell className="text-right">
                                             <div className="flex justify-end gap-2">
                                                 <Button variant="outline" size="sm" asChild>
-                                                    <Link href={`/items/${item.id}/edit`}>Edit</Link>
+                                                    <Link href={`/items/${item.id}/edit`}>{t('Edit')}</Link>
                                                 </Button>
                                                 <Dialog open={itemToDelete?.id === item.id} onOpenChange={(open) => !open && setItemToDelete(null)}>
                                                     <DialogTrigger asChild>
                                                         <Button variant="destructive" size="sm" onClick={() => setItemToDelete(item)}>
-                                                            Delete
+                                                            {t('Delete')}
                                                         </Button>
                                                     </DialogTrigger>
                                                     <DialogContent>
                                                         <DialogHeader>
-                                                            <DialogTitle>Are you sure?</DialogTitle>
+                                                            <DialogTitle>{t('Are you sure?')}</DialogTitle>
                                                             <DialogDescription>
                                                                 This action cannot be undone. This will permanently delete the item
                                                                 "{item.name}".
@@ -107,10 +107,10 @@ export default function Index({ items, flash }: { items: Item[]; flash?: { succe
                                                         </DialogHeader>
                                                         <DialogFooter>
                                                             <Button variant="outline" onClick={() => setItemToDelete(null)}>
-                                                                Cancel
+                                                                {t('Cancel')}
                                                             </Button>
                                                             <Button variant="destructive" onClick={() => handleDelete(item)}>
-                                                                Delete
+                                                                {t('Delete')}
                                                             </Button>
                                                         </DialogFooter>
                                                     </DialogContent>
